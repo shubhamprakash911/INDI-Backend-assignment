@@ -11,7 +11,7 @@ const sendToken = require("../utils/sendToken");
 
 /**
  * @swagger
- * /api/users/login:
+ * /api/user/login:
  *   post:
  *     summary: Login user and get an authentication token
  *     tags: [Users]
@@ -32,7 +32,7 @@ const sendToken = require("../utils/sendToken");
  *               - password
  *     responses:
  *       '200':
- *         description: User has been successfully logged in, and a token is provided.
+ *         description: User has been successfully logged in, and a token stored in client's cookie.
  *         content:
  *           application/json:
  *             schema:
@@ -46,8 +46,6 @@ const sendToken = require("../utils/sendToken");
  *                   type: string
  *                 isAdmin:
  *                   type: boolean
- *                 token:
- *                   type: string
  *       '401':
  *         description: Invalid email or password, or email not found.
  */
@@ -77,7 +75,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 /**
  * @swagger
- * /api/users/register:
+ * /api/user/register:
  *   post:
  *     summary: Register a new user
  *     tags: [Users]
@@ -95,13 +93,15 @@ const loginUser = asyncHandler(async (req, res) => {
  *                 type: string
  *               password:
  *                 type: string
+ *               isAdmin:
+ *                 type: boolean
  *             required:
  *               - name
  *               - email
  *               - password
  *     responses:
  *       '201':
- *         description: User has been successfully registered, and a token is provided.
+ *         description: User has been successfully registered, and a token stored in client's cookie.
  *         content:
  *           application/json:
  *             schema:
@@ -115,8 +115,6 @@ const loginUser = asyncHandler(async (req, res) => {
  *                   type: string
  *                 isAdmin:
  *                   type: boolean
- *                 token:
- *                   type: string
  *       '400':
  *         description: Invalid user data or user already exists.
  */

@@ -8,6 +8,7 @@ const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const swaggerOptions = require("./utils/swaggerOptions");
 const bookRoute = require("./routes/bookRoute");
+const borrowBookRoute = require("./routes/borrowBookRoute");
 
 const app = express();
 
@@ -24,8 +25,9 @@ app.get("/", (req, res) => {
 // all routes are here
 app.use("/api/user", userRoute);
 app.use("/api/book", bookRoute);
+app.use("/api/borrow", borrowBookRoute);
 
-//swagger
+//swagger api documentation
 const specs = swaggerJsdoc(swaggerOptions);
 app.use(
   "/api-docs",

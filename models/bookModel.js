@@ -16,6 +16,9 @@ const mongoose = require("mongoose");
  *         id:
  *           type: string
  *           description: The auto-generated id of the book
+ *         ISBN:
+ *           type: string
+ *           description: uniq ISBN of book
  *         title:
  *           type: string
  *           description: The title of your book
@@ -32,11 +35,12 @@ const mongoose = require("mongoose");
  *           type: String
  *           description: Genre of book
  *       example:
- *         id: 651fb86a8772977ecc3918e6
+ *         ISBN: ASDF1234
  *         title: The New Turing Omnibus
  *         author: Alexander K. Dewdney
- *         finished: false
- *         createdAt: 2020-03-10T04:05:06.157Z
+ *         publishedYear: 2023
+ *         quantity: 5
+ *         genre: finction
  */
 
 const bookSchema = new mongoose.Schema({

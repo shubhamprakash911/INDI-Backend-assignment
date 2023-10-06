@@ -1,10 +1,12 @@
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("./asyncHandler");
+const User = require("../models/userModel");
 
 // User must be authenticated
 const authenticate = asyncHandler(async (req, res, next) => {
   // Read JWT from the 'jwt' cookie
   const { token } = req.cookies;
+  console.log(token);
 
   if (token) {
     try {
