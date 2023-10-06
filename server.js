@@ -7,6 +7,7 @@ const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const swaggerOptions = require("./utils/swaggerOptions");
+const bookRoute = require("./routes/bookRoute");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 
 // all routes are here
 app.use("/api/user", userRoute);
+app.use("/api/book", bookRoute);
 
 //swagger
 const specs = swaggerJsdoc(swaggerOptions);
