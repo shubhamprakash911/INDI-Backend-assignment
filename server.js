@@ -4,6 +4,9 @@ const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoute");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const swaggerOptions = require("./utils/swaggerOptions");
 
 const app = express();
 
@@ -18,7 +21,15 @@ app.get("/", (req, res) => {
 });
 
 // all routes are here
-app.use("/api/users", userRoute);
+app.use("/api/user", userRoute);
+
+//swagger
+const specs = swaggerJsdoc(swaggerOptions);
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, { explorer: true })
+);
 
 //error handler
 app.use(notFound);
