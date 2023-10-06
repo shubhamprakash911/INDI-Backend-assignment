@@ -16,11 +16,12 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   if (user && (await user.matchPassword(password))) {
-    sendToken(user._id);
+    sendToken(res, user._id);
     res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
+      isAdmin: user.isAdmin,
     });
   } else {
     res.status(401);
@@ -42,7 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create(req.body);
 
   if (user) {
-    sendToken(user._id);
+    sendToken(res, user._id);
     res.status(201).json({
       _id: user._id,
       name: user.name,

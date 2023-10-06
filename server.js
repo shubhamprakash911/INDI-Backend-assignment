@@ -3,6 +3,7 @@ const express = require("express");
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoute");
+const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 
 const app = express();
 
@@ -18,6 +19,10 @@ app.get("/", (req, res) => {
 
 // all routes are here
 app.use("/api/users", userRoute);
+
+//error handler
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
