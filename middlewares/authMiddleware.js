@@ -6,7 +6,6 @@ const User = require("../models/userModel");
 const authenticate = asyncHandler(async (req, res, next) => {
   // Read JWT from the 'jwt' cookie
   const { token } = req.cookies;
-  console.log(token);
 
   if (token) {
     try {

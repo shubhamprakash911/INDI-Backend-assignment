@@ -111,8 +111,6 @@ const deleteBookById = asyncHandler(async (req, res) => {
  *     summary: Get all books
  *     tags: [Books]
  *     description: Get a list of all books in the system.
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       '200':
  *         description: A list of books has been successfully retrieved.
@@ -128,4 +126,70 @@ const getBooks = asyncHandler(async (req, res) => {
   res.status(201).json({ success: true, data: books });
 });
 
-module.exports = { createBook, updateBookById, deleteBookById, getBooks };
+/**
+ * @swagger
+ * /api/book/search:
+ *   get:
+ *     summary: Search for books by title, author, or ISBN
+ *     tags: [Books]
+ *     description: Search for books in the library by title, author, or ISBN.
+ *     parameters:
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         description: The title of the book to search for.
+ *       - in: query
+ *         name: author
+ *         schema:
+ *           type: string
+ *         description: The author of the book to search for.
+ *       - in: query
+ *         name: isbn
+ *         schema:
+ *           type: string
+ *         description: The ISBN of the book to search for.
+ *     responses:
+ *       '200':
+ *         description: Books matching the search criteria have been found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Book'
+ *       '404':
+ *         description: No books found matching the search criteria.
+ */
+const searchBook = asyncHandler(async (req, res) => {
+  const { title, author, isbn } = req.query;
+
+  // Create a query object based on the provided search criteria
+  const query = {};
+  if (title) {
+    query.title = { $regex: title, $options: "i" }; // Case-insensitive title search
+  }
+  if (author) {
+    query.author = { $regex: author, $options: "i" }; // Case-insensitive author search
+  }
+  if (isbn) {
+    query.ISBN = isbn; // Exact ISBN search
+  }
+
+  const books = await Book.find(query);
+
+  if (books.length === 0) {
+    res.status(404);
+    throw new Error("No books found matching the search criteria.");
+  }
+
+  res.json(books);
+});
+
+module.exports = {
+  createBook,
+  updateBookById,
+  deleteBookById,
+  getBooks,
+  searchBook,
+};

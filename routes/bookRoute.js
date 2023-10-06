@@ -4,14 +4,14 @@ const {
   createBook,
   updateBookById,
   deleteBookById,
+  searchBook,
 } = require("../controllers/bookController");
 const { authenticate, admin } = require("../middlewares/authMiddleware");
 const bookRoute = express.Router();
 
-bookRoute
-  .route("/")
-  .get(authenticate, getBooks)
-  .post(authenticate, admin, createBook);
+bookRoute.get("/search", searchBook);
+
+bookRoute.route("/").get(getBooks).post(authenticate, admin, createBook);
 bookRoute
   .route("/:id")
   .patch(authenticate, admin, updateBookById)
