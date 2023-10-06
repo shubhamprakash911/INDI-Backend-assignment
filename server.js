@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
+const userRoute = require("./routes/userRoute");
 
 const app = express();
 
@@ -14,6 +15,9 @@ connectDB(); // connection to db
 app.get("/", (req, res) => {
   res.send("Welcome to Indi-backend-assignment");
 });
+
+// all routes are here
+app.use("/users", userRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
