@@ -8,9 +8,7 @@ const swaggerOptions = {
         "This is a Book library API application made with Express,MongoDB and documented with Swagger",
     },
     servers: [
-      {
-        url: "http://localhost:5000",
-      },
+      { url: "https://indi-backend-assignment.onrender.com" }, //use localhost instead of deploy url when running this project locally
     ],
   },
   apis: ["./models/*.js", "./controllers/*.js"],
