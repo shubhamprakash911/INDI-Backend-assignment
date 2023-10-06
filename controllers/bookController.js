@@ -1,5 +1,6 @@
 const asyncHandler = require("../middlewares/asyncHandler");
 const Book = require("../models/bookModel");
+const Borrow = require("../models/borrowModel");
 
 /**
  * @swagger
@@ -184,6 +185,44 @@ const searchBook = asyncHandler(async (req, res) => {
   }
 
   res.json(books);
+});
+
+/**
+ * @swagger
+ * /api/book/recommend:
+ *   get:
+ *     summary: Recommend books by author to the user
+ *     tags: [Books]
+ *     description: Recommend books by the same author to the user based on their borrowing history.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Recommended books have been successfully retrieved.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Book'
+ */
+const recommendBooksByAuthor = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  // Find books previously borrowed by the user
+  const userBorrows = await Borrow.find({ user: userId }).populate("book");
+
+  // Extract unique authors from the borrowed books
+  const uniqueAuthors = [
+    ...new Set(userBorrows.map((borrow) => borrow.book.author)),
+  ];
+
+  // Find books with the same author that the user hasn't borrowed
+  const recommendedBooks = await Book.find({ author: { $in: uniqueAuthors } })
+    .where("_id")
+    .nin(userBorrows.map((borrow) => borrow.book._id))
+    .limit(5); // You can limit the number of recommendations
+
+  res.json(recommendedBooks);
 });
 
 module.exports = {

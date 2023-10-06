@@ -1,5 +1,6 @@
 const asyncHandler = require("../middlewares/asyncHandler");
 const Borrow = require("../models/borrowModel");
+const User = require("../models/userModel");
 /**
  * @swagger
  * tags:
