@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const asyncHandler = require("./asynHanler");
+const asyncHandler = require("./asynHandler");
 
 // User must be authenticated
 const authenticate = asyncHandler(async (req, res, next) => {
