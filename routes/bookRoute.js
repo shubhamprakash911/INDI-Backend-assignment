@@ -5,11 +5,13 @@ const {
   updateBookById,
   deleteBookById,
   searchBook,
+  recommendBooksByAuthor,
 } = require("../controllers/bookController");
 const { authenticate, admin } = require("../middlewares/authMiddleware");
 const bookRoute = express.Router();
 
 bookRoute.get("/search", searchBook);
+bookRoute.get("/recommend", authenticate, recommendBooksByAuthor);
 
 bookRoute.route("/").get(getBooks).post(authenticate, admin, createBook);
 bookRoute

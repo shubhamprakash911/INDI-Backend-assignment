@@ -231,4 +231,5 @@ module.exports = {
   deleteBookById,
   getBooks,
   searchBook,
+  recommendBooksByAuthor,
 };
