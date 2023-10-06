@@ -20,11 +20,11 @@ These instructions will help you set up and run the this project on your local m
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/Rubel011/library-management-system.git
+   git clone https://github.com/shubhamprakash911/INDI-Backend-assignment.git
 
 2. Navigate to the project directory:
     ```bash
-    cd library-management-system
+    cd INDI-Backend-assignment
 
 3. Install the project dependencies:
     ```bash
